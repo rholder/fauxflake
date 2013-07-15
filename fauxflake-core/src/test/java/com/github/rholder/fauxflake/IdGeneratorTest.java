@@ -17,6 +17,8 @@
 package com.github.rholder.fauxflake;
 
 import com.github.rholder.fauxflake.api.IdGenerator;
+import com.github.rholder.fauxflake.provider.SystemTimeProvider;
+import com.github.rholder.fauxflake.provider.twitter.SnowflakeEncodingProvider;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +45,7 @@ public class IdGeneratorTest {
 
     @Before
     public void before() {
-        idGenerator = IdGenerators.newSnowflakeIdGenerator();
+        idGenerator = new DefaultIdGenerator(new SystemTimeProvider(), new SnowflakeEncodingProvider(1234));
     }
 
     /**
