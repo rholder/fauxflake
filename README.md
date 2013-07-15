@@ -1,7 +1,10 @@
 [![Build Status](https://travis-ci.org/rholder/fauxflake.png)](https://travis-ci.org/rholder/fauxflake)
 
 ##What is this?
-TODO write this
+Fauxflake is an easily embeddable, decentralized, k-ordered unique ID generator.
+It can use the same encoded ID format as Twitter's Snowflake or Boundary's
+Flake implementations as well as any other customized encoding without too much
+effort.
 
 ##Maven
 
