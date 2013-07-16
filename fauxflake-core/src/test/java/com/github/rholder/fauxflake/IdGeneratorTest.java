@@ -16,6 +16,7 @@
 
 package com.github.rholder.fauxflake;
 
+import com.github.rholder.fauxflake.api.EncodingProvider;
 import com.github.rholder.fauxflake.api.IdGenerator;
 import com.github.rholder.fauxflake.api.TimeProvider;
 import com.github.rholder.fauxflake.provider.SystemTimeProvider;
@@ -151,4 +152,31 @@ public class IdGeneratorTest {
             Assert.assertTrue("Exception did not relate to backwards time", e.getMessage().contains("Backwards"));
         }
     }
+
+    @Test
+    public void endOfSequenceNumbers() throws InterruptedException {
+        EncodingProvider encodingProvider = new SnowflakeEncodingProvider(1234);
+
+        TimeProvider timeProvider = mock(TimeProvider.class);
+        long now = System.currentTimeMillis();
+
+        // max out the sequence numbers for a single period of time
+        when(timeProvider.getCurrentTime()).thenReturn(now);
+        idGenerator = new DefaultIdGenerator(timeProvider, encodingProvider);
+
+        // sanity check that we have unique ids
+        Set<String> ids = new HashSet<String>();
+        for(int i = 0; i < encodingProvider.maxSequenceNumbers(); i++) {
+            ids.add(idGenerator.generateId(0).asString());
+        }
+        Assert.assertEquals("Duplicate id detected", encodingProvider.maxSequenceNumbers(), ids.size());
+
+        try {
+            idGenerator.generateId(0);
+            Assert.fail("Expected Exception for waiting too long");
+        } catch (InterruptedException e) {
+            Assert.assertTrue("Exception did not relate to maximum time to wait", e.getMessage().contains("maximum time to wait "));
+        }
+    }
+
 }
