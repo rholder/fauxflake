@@ -17,14 +17,16 @@
 package com.github.rholder.fauxflake;
 
 import com.github.rholder.fauxflake.api.IdGenerator;
+import com.github.rholder.fauxflake.api.TimeProvider;
 import com.github.rholder.fauxflake.provider.SystemTimeProvider;
 import com.github.rholder.fauxflake.provider.twitter.SnowflakeEncodingProvider;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,18 +37,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.github.rholder.fauxflake.provider.twitter.SnowflakeDecodingUtils.decodeDate;
 import static com.github.rholder.fauxflake.provider.twitter.SnowflakeDecodingUtils.decodeMachineId;
 import static com.github.rholder.fauxflake.provider.twitter.SnowflakeDecodingUtils.decodeSequence;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class IdGeneratorTest {
 
-    // TODO test backwards time
-
-
     private IdGenerator idGenerator;
-
-    @Before
-    public void before() {
-        idGenerator = new DefaultIdGenerator(new SystemTimeProvider(), new SnowflakeEncodingProvider(1234));
-    }
 
     /**
      * Concurrently generate 1 million unique id's and check them for uniqueness.
@@ -55,6 +51,8 @@ public class IdGeneratorTest {
      */
     @Test
     public void threadSafety() throws InterruptedException {
+
+        idGenerator = new DefaultIdGenerator(new SystemTimeProvider(), new SnowflakeEncodingProvider(1234));
 
         final ExecutorService generatorService = Executors.newFixedThreadPool(100);
         final ExecutorService analyzerService = Executors.newSingleThreadExecutor();
@@ -123,5 +121,34 @@ public class IdGeneratorTest {
         Assert.assertTrue("Timed out waiting for all id's to be processed", analyzerSuccessful);
 
         Assert.assertEquals("There are still items left in the analysis queue", 0, q.size());
+    }
+
+    @Test
+    public void backwardsTime() throws InterruptedException {
+        TimeProvider timeProvider = mock(TimeProvider.class);
+
+        long now = System.currentTimeMillis();
+        when(timeProvider.getCurrentTime())
+                .thenReturn(now) // initial time
+                .thenReturn(now) // get id 1
+                .thenReturn(now) // get id 2
+                .thenReturn(now) // get id 3
+                .thenReturn(now - 50); // simulate time running backwards
+
+        idGenerator = new DefaultIdGenerator(timeProvider, new SnowflakeEncodingProvider(1234));
+
+        // sanity check that we have 3 ids
+        Set<Long> ids = new HashSet<Long>();
+        ids.add(idGenerator.generateId(10).asLong());
+        ids.add(idGenerator.generateId(10).asLong());
+        ids.add(idGenerator.generateId(10).asLong());
+        Assert.assertEquals("Duplicate id detected", 3, ids.size());
+
+        try {
+            idGenerator.generateId(10);
+            Assert.fail("Expected Exception for backwards time");
+        } catch (InterruptedException e) {
+            Assert.assertTrue("Exception did not relate to backwards time", e.getMessage().contains("Backwards"));
+        }
     }
 }

@@ -58,7 +58,7 @@ public class DefaultIdGenerator implements IdGenerator {
 
             // backwards time, likely due to NTP updates for clock drift
             if(currentTime < lastTime) {
-                throw new RuntimeException("Backwards time detected, try again in " + (lastTime - currentTime) + " ms");
+                throw new InterruptedException("Backwards time detected, try again in " + (lastTime - currentTime) + " ms");
             }
 
             if(sequence == encodingProvider.maxSequenceNumbers()) {
