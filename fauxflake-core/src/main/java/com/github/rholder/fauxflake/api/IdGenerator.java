@@ -16,6 +16,10 @@
 
 package com.github.rholder.fauxflake.api;
 
+/**
+ * Implementations of this interface are the primary entry points for generating
+ * unique identifiers.
+ */
 public interface IdGenerator {
 
     /**

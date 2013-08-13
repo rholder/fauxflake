@@ -17,7 +17,7 @@
 package com.github.rholder.fauxflake.api;
 
 /**
- * Implementations of this class are responsible for converting time and
+ * Implementations of this interface are responsible for converting time and
  * sequence values into valid encoded identifiers.
  */
 public interface EncodingProvider {

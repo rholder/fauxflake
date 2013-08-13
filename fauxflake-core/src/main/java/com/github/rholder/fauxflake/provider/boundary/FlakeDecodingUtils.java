@@ -19,6 +19,10 @@ package com.github.rholder.fauxflake.provider.boundary;
 import java.nio.ByteBuffer;
 import java.util.Date;
 
+/**
+ * This class adds a collection of functionality for working with and
+ * manipulating 128-bit Flake id's.
+ */
 public class FlakeDecodingUtils {
 
     /**

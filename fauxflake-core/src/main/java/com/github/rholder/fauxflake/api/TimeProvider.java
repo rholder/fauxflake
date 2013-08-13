@@ -16,10 +16,14 @@
 
 package com.github.rholder.fauxflake.api;
 
+/**
+ * This interface is a simple abstraction to an underlying time source that can
+ * return the number of milliseconds that have elapsed from the Unix epoch.
+ */
 public interface TimeProvider {
 
     /**
-     * Return the current time from the Unix epoch in ms.
+     * Return the number of milliseconds from the Unix epoch.
      */
     public long getCurrentTime();
 }

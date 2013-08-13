@@ -16,6 +16,13 @@
 
 package com.github.rholder.fauxflake.api;
 
+/**
+ * Implementations of this interface provide a mechanism to uniquely identify
+ * the machine where the {@link IdGenerator} is running. Particular attention
+ * should be paid to whether a single JVM per machine or multiple JVM processes
+ * per machine are the intended targets for deployment as they will affect which
+ * implementations are suitable for a given setup.
+ */
 public interface MachineIdProvider {
 
     /**

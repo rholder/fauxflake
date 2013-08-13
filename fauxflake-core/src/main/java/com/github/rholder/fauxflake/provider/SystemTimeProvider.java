@@ -18,6 +18,10 @@ package com.github.rholder.fauxflake.provider;
 
 import com.github.rholder.fauxflake.api.TimeProvider;
 
+/**
+ * Implement the {@link TimeProvider} as a simple call to
+ * System.currentTimeMillis().
+ */
 public class SystemTimeProvider implements TimeProvider {
 
     @Override

@@ -16,6 +16,10 @@
 
 package com.github.rholder.fauxflake.api;
 
+/**
+ * Implementations of this interface encapsulate unique identifier
+ * representations for the underlying identifier type.
+ */
 public interface Id {
 
     /**
