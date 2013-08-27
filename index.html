@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Fauxflake by rholder</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Fauxflake</h1>
+        <h2>Fauxflake is an easily embeddable decentralized, k-ordered unique ID generator.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/rholder/fauxflake/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/rholder/fauxflake/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/rholder/fauxflake" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <p><a href="https://travis-ci.org/rholder/fauxflake"><img src="https://travis-ci.org/rholder/fauxflake.png" alt="Build Status"></a></p>
+
+<h2>
+<a name="what-is-this" class="anchor" href="#what-is-this"><span class="octicon octicon-link"></span></a>What is this?</h2>
+
+<p>Fauxflake is an easily embeddable, decentralized, k-ordered unique ID generator.
+It can use the same encoded ID format as Twitter's Snowflake or Boundary's
+Flake implementations as well as any other customized encoding without too much
+effort. The <code>fauxflake-core</code> module has no external dependencies and is meant to
+be about as light as possible while still delivering useful functionality.
+Essentially, if you want to be able to generate a unique identifier across your
+infrastructure with reasonable assurances about collisions, then you might find
+this useful.</p>
+
+<h2>
+<a name="the-problem" class="anchor" href="#the-problem"><span class="octicon octicon-link"></span></a>The Problem</h2>
+
+<p>You've run into one or more of the following scenarios:</p>
+
+<ul>
+<li>You need to generate a unique identifier, perhaps for an RDBMS primary key or
+for a NoSQL storage abstraction, and you need it done fast.</li>
+<li>You need to be able to guarantee the loose orderings of unique keys when more
+than one machine is generating them.</li>
+<li>A centralized key generation service seems too heavy or is otherwise unacceptable.</li>
+<li>You've thought about clock drift, server time running backwards, or
+any of a number of horrible things you read <a href="http://infiniteundo.com/post/25509354022/more-falsehoods-programmers-believe-about-time-wisdom">here</a>
+that make relying on simple system timestamps for anything absolutely
+horrifying.</li>
+</ul><h2>
+<a name="where-can-i-get-it" class="anchor" href="#where-can-i-get-it"><span class="octicon octicon-link"></span></a>Where can I get it?</h2>
+
+<p>You can find this module in the Maven Central repository by using your favorite
+build tool:</p>
+
+<h3>
+<a name="maven" class="anchor" href="#maven"><span class="octicon octicon-link"></span></a>Maven</h3>
+
+<pre><code>&lt;dependency&gt;
+  &lt;groupId&gt;com.github.rholder&lt;/groupId&gt;
+  &lt;artifactId&gt;fauxflake-core&lt;/artifactId&gt;
+  &lt;version&gt;1.0.0&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<h3>
+<a name="gradle" class="anchor" href="#gradle"><span class="octicon octicon-link"></span></a>Gradle</h3>
+
+<pre><code>compile "com.github.rholder:fauxflake-core:1.0.0"
+</code></pre>
+
+<h2>
+<a name="quickstart" class="anchor" href="#quickstart"><span class="octicon octicon-link"></span></a>Quickstart</h2>
+
+<p>Let's say you want to generate a lexicographically sortable, Twitter compatible
+identifier, as a String. You could do that with the following snippet:</p>
+
+<div class="highlight"><pre><span class="n">IdGenerator</span> <span class="n">snowflake</span> <span class="o">=</span> <span class="n">IdGenerators</span><span class="o">.</span><span class="na">newSnowflakeIdGenerator</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">snowflake</span><span class="o">.</span><span class="na">generateId</span><span class="o">(</span><span class="mi">1000</span><span class="o">).</span><span class="na">asString</span><span class="o">();</span>
+</pre></div>
+
+<p>The Snowflake and Flake <code>IdGenerator</code> instances are both thread-safe and
+intended to be used as singletons.</p>
+
+<h2>
+<a name="customization" class="anchor" href="#customization"><span class="octicon octicon-link"></span></a>Customization</h2>
+
+<p>The <code>MachineIdProvider</code> is meant to be customized when the "good enough"
+guarantees coming from the <code>MacMachineIdProvider</code> and the
+<code>MacPidMachineIdProvider</code>aren't really good enough for your use case and you
+need more strictness in how those are being set. For instance, by just swapping
+in your own unique machine identifier from a system property, you can get an
+actual universal guarantee among all of your machines if each are given a unique
+number on startup:</p>
+
+<div class="highlight"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomMachineIdProvider</span> <span class="kd">implements</span> <span class="n">MachineIdProvider</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">long</span> <span class="nf">getMachineId</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Long</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"my.app.machine.id"</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+
+<p>You might want to note that a Snowflake ID only has 1024 possible unique machine
+identifiers since the specification calls for reserving 10 bits for this
+information.</p>
+
+<h2>
+<a name="building-from-source" class="anchor" href="#building-from-source"><span class="octicon octicon-link"></span></a>Building from source</h2>
+
+<p>The Fauxflake project uses a <a href="http://gradle.org">Gradle</a>-based build system. In the instructions
+below, <a href="http://vimeo.com/34436402"><code>./gradlew</code></a> is invoked from the root of the source tree and serves as
+a cross-platform, self-contained bootstrap mechanism for the build. The only
+prerequisites are <a href="https://help.github.com/articles/set-up-git">Git</a> and JDK 1.6+.</p>
+
+<h3>
+<a name="check-out-sources" class="anchor" href="#check-out-sources"><span class="octicon octicon-link"></span></a>check out sources</h3>
+
+<p><code>git clone git://github.com/rholder/fauxflake.git</code></p>
+
+<h3>
+<a name="compile-and-test-build-all-jars" class="anchor" href="#compile-and-test-build-all-jars"><span class="octicon octicon-link"></span></a>compile and test, build all jars</h3>
+
+<p><code>./gradlew build</code></p>
+
+<h3>
+<a name="install-all-jars-into-your-local-maven-cache" class="anchor" href="#install-all-jars-into-your-local-maven-cache"><span class="octicon octicon-link"></span></a>install all jars into your local Maven cache</h3>
+
+<p><code>./gradlew install</code></p>
+
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>The Fauxflake module is released under version 2.0 of the
+<a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License</a>.</p>
+
+<h2>
+<a name="references" class="anchor" href="#references"><span class="octicon octicon-link"></span></a>References</h2>
+
+<ul>
+<li><a href="https://github.com/twitter/snowflake/">https://github.com/twitter/snowflake/</a></li>
+<li><a href="https://blog.twitter.com/2010/announcing-snowflake">https://blog.twitter.com/2010/announcing-snowflake</a></li>
+<li><a href="https://github.com/boundary/flake">https://github.com/boundary/flake</a></li>
+<li><a href="http://boundary.com/blog/2012/01/12/flake-a-decentralized-k-ordered-unique-id-generator-in-erlang/">http://boundary.com/blog/2012/01/12/flake-a-decentralized-k-ordered-unique-id-generator-in-erlang/</a></li>
+<li><a href="http://infiniteundo.com/post/25509354022/more-falsehoods-programmers-believe-about-time-wisdom">http://infiniteundo.com/post/25509354022/more-falsehoods-programmers-believe-about-time-wisdom</a></li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
