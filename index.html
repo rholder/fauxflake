@@ -85,8 +85,8 @@ build tool:</p>
 <p>Let's say you want to generate a lexicographically sortable, Twitter compatible
 identifier, as a String. You could do that with the following snippet:</p>
 
-<div class="highlight"><pre><span class="n">IdGenerator</span> <span class="n">snowflake</span> <span class="o">=</span> <span class="n">IdGenerators</span><span class="o">.</span><span class="na">newSnowflakeIdGenerator</span><span class="o">();</span>
-<span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">snowflake</span><span class="o">.</span><span class="na">generateId</span><span class="o">(</span><span class="mi">1000</span><span class="o">).</span><span class="na">asString</span><span class="o">();</span>
+<div class="highlight"><pre>    <span class="n">IdGenerator</span> <span class="n">snowflake</span> <span class="o">=</span> <span class="n">IdGenerators</span><span class="o">.</span><span class="na">newSnowflakeIdGenerator</span><span class="o">();</span>
+    <span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="n">snowflake</span><span class="o">.</span><span class="na">generateId</span><span class="o">(</span><span class="mi">1000</span><span class="o">).</span><span class="na">asString</span><span class="o">();</span>
 </pre></div>
 
 <p>The Snowflake and Flake <code>IdGenerator</code> instances are both thread-safe and
@@ -114,6 +114,11 @@ number on startup:</p>
 <p>You might want to note that a Snowflake ID only has 1024 possible unique machine
 identifiers since the specification calls for reserving 10 bits for this
 information.</p>
+
+<h2>
+<a name="additional-documentation" class="anchor" href="#additional-documentation"><span class="octicon octicon-link"></span></a>Additional Documentation</h2>
+
+<p>Javadoc can be found <a href="http://rholder.github.io/fauxflake/javadoc/fauxflake-core/index.html">here</a>.</p>
 
 <h2>
 <a name="building-from-source" class="anchor" href="#building-from-source"><span class="octicon octicon-link"></span></a>Building from source</h2>
