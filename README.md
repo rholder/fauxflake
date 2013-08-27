@@ -58,17 +58,20 @@ actual universal guarantee among all of your machines if each are given a unique
 number on startup:
 
 ```java
-    public class CustomMachineIdProvider implements MachineIdProvider {
-        @Override
-        public long getMachineId() {
-            return Long.valueOf(System.getProperty("my.app.machine.id"));
-        }
+public class CustomMachineIdProvider implements MachineIdProvider {
+    @Override
+    public long getMachineId() {
+        return Long.valueOf(System.getProperty("my.app.machine.id"));
     }
+}
 ```
 
 You might want to note that a Snowflake ID only has 1024 possible unique machine
 identifiers since the specification calls for reserving 10 bits for this
 information.
+
+##Additional Documentation
+Javadoc can be found [here](http://rholder.github.io/fauxflake/javadoc/fauxflake-core/index.html).
 
 ##Building from source
 The Fauxflake project uses a [Gradle](http://gradle.org)-based build system. In the instructions
