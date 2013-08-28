@@ -71,7 +71,7 @@ identifiers since the specification calls for reserving 10 bits for this
 information.
 
 ##Additional Documentation
-Javadoc can be found [here](http://rholder.github.io/fauxflake/javadoc/fauxflake-core/index.html).
+Javadoc can be found [here](http://rholder.github.io/fauxflake/javadoc/1.0.0/fauxflake-core/index.html).
 
 ##Building from source
 The Fauxflake project uses a [Gradle](http://gradle.org)-based build system. In the instructions
