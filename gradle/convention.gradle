@@ -51,8 +51,24 @@ subprojects { project ->
         }
     }
 
-    // Ensure output is on a new line
-    javadoc.doFirst { println "" }
+    javadoc {
+        doFirst {
+            // Ensure output is on a new line
+            println ""
+
+            // Stuff an image into the destination directory
+            def target = destinationDir
+            copy {
+                from rootProject.file('./gradle/bkg.png')
+                into target
+            }
+        }
+        options {
+            stylesheetFile = rootProject.file('./gradle/javadoc-stylesheet.css')
+            windowTitle = "Fauxflake Javadoc ${project.version}"
+        }
+        options.addStringOption('top').value = '<h2 class="title" style="padding-top:40px">Fauxflake</h2>'
+    }
 
     configurations {
         provided {
