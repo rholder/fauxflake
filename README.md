@@ -28,14 +28,14 @@ build tool:
 ###Maven
 
     <dependency>
-      <groupId>com.github.rholder</groupId>
+      <groupId>com.github.rholder.fauxflake</groupId>
       <artifactId>fauxflake-core</artifactId>
       <version>1.0.0</version>
     </dependency>
 
 ###Gradle
 
-    compile "com.github.rholder:fauxflake-core:1.0.0"
+    compile "com.github.rholder.fauxflake:fauxflake-core:1.0.0"
 
 ##Quickstart
 Let's say you want to generate a lexicographically sortable, Twitter compatible
