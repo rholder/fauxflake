@@ -178,5 +178,4 @@ public class IdGeneratorTest {
             Assert.assertTrue("Exception did not relate to maximum time to wait", e.getMessage().contains("maximum time to wait "));
         }
     }
-
 }

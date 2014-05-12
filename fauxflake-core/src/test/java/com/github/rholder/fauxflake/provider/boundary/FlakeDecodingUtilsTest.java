@@ -76,10 +76,7 @@ public class FlakeDecodingUtilsTest {
         Date idDate = decodeDate(idBytes);
 
         Assert.assertTrue("Now is greater than generated id", now.getTime() <= idDate.getTime());
-        Assert.assertTrue("Later (now + 6 ms) is less than generated id", (now.getTime() + 6) > idDate.getTime());
         Assert.assertEquals("Unexpected machine id", TEST_MACHINE_ID, decodeMachineId(idBytes));
-
-        System.out.println(id.asString());
     }
 
     @Test
