@@ -40,13 +40,21 @@ public class DefaultIdGenerator implements IdGenerator {
 
     private final TimeProvider timeProvider;
     private final EncodingProvider encodingProvider;
+    private final int startingSequenceNumber;
 
     public DefaultIdGenerator(TimeProvider timeProvider,
                               EncodingProvider encodingProvider) {
+        this(timeProvider, encodingProvider, 0);
+    }
+
+    public DefaultIdGenerator(TimeProvider timeProvider,
+                              EncodingProvider encodingProvider,
+                              int startingSequenceNumber) {
         this.timeProvider = timeProvider;
         this.encodingProvider = encodingProvider;
 
         this.lastTime = timeProvider.getCurrentTime();
+        this.startingSequenceNumber = startingSequenceNumber;
         this.sequence = 0;
     }
 
@@ -81,7 +89,7 @@ public class DefaultIdGenerator implements IdGenerator {
             currentSequence = sequence;
             sequence++;
         }
-        return new Values(currentTime, currentSequence);
+        return new Values(currentTime, (currentSequence + startingSequenceNumber) % encodingProvider.maxSequenceNumbers());
     }
 
     @Override

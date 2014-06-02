@@ -43,17 +43,31 @@ import static org.mockito.Mockito.when;
 
 public class IdGeneratorTest {
 
-    private IdGenerator idGenerator;
+    @Test
+    public void defaultSequenceThreadSafety() throws InterruptedException {
+        // should start at sequence number 0
+        EncodingProvider encodingProvider = new SnowflakeEncodingProvider(1234);
+        checkThreadSafety(new DefaultIdGenerator(new SystemTimeProvider(), encodingProvider));
+    }
+
+    @Test
+    public void maxSequenceThreadSafety() throws InterruptedException {
+        EncodingProvider encodingProvider = new SnowflakeEncodingProvider(1234);
+        checkThreadSafety(new DefaultIdGenerator(new SystemTimeProvider(), encodingProvider, encodingProvider.maxSequenceNumbers()));
+    }
+
+    @Test
+    public void someSequenceThreadSafety() throws InterruptedException {
+        EncodingProvider encodingProvider = new SnowflakeEncodingProvider(1234);
+        checkThreadSafety(new DefaultIdGenerator(new SystemTimeProvider(), encodingProvider, 17));
+    }
 
     /**
      * Concurrently generate 1 million unique id's and check them for uniqueness.
      *
      * @throws InterruptedException
      */
-    @Test
-    public void threadSafety() throws InterruptedException {
-
-        idGenerator = new DefaultIdGenerator(new SystemTimeProvider(), new SnowflakeEncodingProvider(1234));
+    public void checkThreadSafety(final IdGenerator idGenerator) throws InterruptedException {
 
         final ExecutorService generatorService = Executors.newFixedThreadPool(100);
         final ExecutorService analyzerService = Executors.newSingleThreadExecutor();
@@ -136,7 +150,7 @@ public class IdGeneratorTest {
                 .thenReturn(now) // get id 3
                 .thenReturn(now - 50); // simulate time running backwards
 
-        idGenerator = new DefaultIdGenerator(timeProvider, new SnowflakeEncodingProvider(1234));
+        IdGenerator idGenerator = new DefaultIdGenerator(timeProvider, new SnowflakeEncodingProvider(1234));
 
         // sanity check that we have 3 ids
         Set<Long> ids = new HashSet<Long>();
@@ -154,15 +168,30 @@ public class IdGeneratorTest {
     }
 
     @Test
-    public void endOfSequenceNumbers() throws InterruptedException {
+    public void defaultEndOfSequenceNumbers() throws InterruptedException {
         EncodingProvider encodingProvider = new SnowflakeEncodingProvider(1234);
+        endOfSequenceNumbers(encodingProvider, 0);
+    }
 
+    @Test
+    public void someEndOfSequenceNumbers() throws InterruptedException {
+        EncodingProvider encodingProvider = new SnowflakeEncodingProvider(1234);
+        endOfSequenceNumbers(encodingProvider, 31);
+    }
+
+    @Test
+    public void maxEndOfSequenceNumbers() throws InterruptedException {
+        EncodingProvider encodingProvider = new SnowflakeEncodingProvider(1234);
+        endOfSequenceNumbers(encodingProvider, encodingProvider.maxSequenceNumbers() - 1);
+    }
+
+    public void endOfSequenceNumbers(EncodingProvider encodingProvider, int startingSequenceNumber) throws InterruptedException {
         TimeProvider timeProvider = mock(TimeProvider.class);
         long now = System.currentTimeMillis();
 
         // max out the sequence numbers for a single period of time
         when(timeProvider.getCurrentTime()).thenReturn(now);
-        idGenerator = new DefaultIdGenerator(timeProvider, encodingProvider);
+        IdGenerator idGenerator = new DefaultIdGenerator(timeProvider, encodingProvider, startingSequenceNumber);
 
         // sanity check that we have unique ids
         Set<String> ids = new HashSet<String>();
