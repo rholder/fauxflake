@@ -98,3 +98,4 @@ The Fauxflake module is released under version 2.0 of the
 * [https://github.com/boundary/flake](https://github.com/boundary/flake)
 * [http://boundary.com/blog/2012/01/12/flake-a-decentralized-k-ordered-unique-id-generator-in-erlang/](http://boundary.com/blog/2012/01/12/flake-a-decentralized-k-ordered-unique-id-generator-in-erlang/)
 * [http://infiniteundo.com/post/25509354022/more-falsehoods-programmers-believe-about-time-wisdom](http://infiniteundo.com/post/25509354022/more-falsehoods-programmers-believe-about-time-wisdom)
+* [http://engineering.custommade.com/simpleflake-distributed-id-generation-for-the-lazy/](http://engineering.custommade.com/simpleflake-distributed-id-generation-for-the-lazy/)
