@@ -30,12 +30,12 @@ build tool:
     <dependency>
       <groupId>com.github.rholder.fauxflake</groupId>
       <artifactId>fauxflake-core</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1</version>
     </dependency>
 
 ###Gradle
 
-    compile "com.github.rholder.fauxflake:fauxflake-core:1.0.0"
+    compile "com.github.rholder.fauxflake:fauxflake-core:1.0.1"
 
 ##Quickstart
 Let's say you want to generate a lexicographically sortable, Twitter compatible
@@ -71,7 +71,7 @@ identifiers since the specification calls for reserving 10 bits for this
 information.
 
 ##Additional Documentation
-Javadoc can be found [here](http://rholder.github.io/fauxflake/javadoc/1.0.0/fauxflake-core/index.html).
+Javadoc can be found [here](http://rholder.github.io/fauxflake/javadoc/1.0.1/fauxflake-core/index.html).
 
 ##Building from source
 The Fauxflake project uses a [Gradle](http://gradle.org)-based build system. In the instructions
