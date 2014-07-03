@@ -17,9 +17,9 @@
 package com.github.rholder.fauxflake.provider.twitter;
 
 import com.github.rholder.fauxflake.DefaultIdGenerator;
+import com.github.rholder.fauxflake.api.Id;
 import com.github.rholder.fauxflake.api.IdGenerator;
 import com.github.rholder.fauxflake.provider.SystemTimeProvider;
-import com.github.rholder.fauxflake.provider.twitter.SnowflakeEncodingProvider;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,11 +52,15 @@ public class SnowflakeDecodingUtilsTest {
     @Test
     public void encodedValueCheck() throws InterruptedException {
         Date now = new Date();
-        long id = idGenerator.generateId(5).asLong();
-        Date idDate = decodeDate(id);
+        Id id = idGenerator.generateId(5);
+        long longId = id.asLong();
+        byte[] byteId = id.asBytes();
+
+        Date idDate = decodeDate(longId);
 
         Assert.assertTrue("Now is greater than generated id", now.getTime() <= idDate.getTime());
-        Assert.assertEquals("Unexpected machine id", TEST_MACHINE_ID, decodeMachineId(id));
+        Assert.assertEquals("Unexpected machine id", TEST_MACHINE_ID, decodeMachineId(longId));
+        Assert.assertEquals("Unexpected number of bytes in id", 8, byteId.length);
     }
 
     @Test

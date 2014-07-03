@@ -19,6 +19,8 @@ package com.github.rholder.fauxflake.util;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 public class MacUtilsTest {
     /**
      * Make sure we can actually fetch a MAC address.
@@ -37,5 +39,27 @@ public class MacUtilsTest {
 
         Assert.assertNotNull("Could not retrieve MAC", mac);
         Assert.assertTrue("Invalid MAC address", mac.length == 6);
+    }
+
+    @Test
+    public void verifyOverride() {
+        System.setProperty(MacUtils.OVERRIDE_MAC_PROP, "00:DE:AD:BE:EF:11");
+
+        byte[] mac = MacUtils.macAddress();
+
+        Assert.assertNotNull("Could not retrieve MAC", mac);
+        Assert.assertTrue("Invalid MAC address", mac.length == 6);
+        Assert.assertEquals("Unexpected MAC address", "[0, -34, -83, -66, -17, 17]", Arrays.toString(mac));
+        System.clearProperty(MacUtils.OVERRIDE_MAC_PROP);
+    }
+
+    @Test
+    public void bogusOverride() {
+        System.setProperty(MacUtils.OVERRIDE_MAC_PROP, "totally not a MAC");
+
+        byte[] mac = MacUtils.getOverride();
+
+        Assert.assertNull("Retrieved a bogus MAC", mac);
+        System.clearProperty(MacUtils.OVERRIDE_MAC_PROP);
     }
 }

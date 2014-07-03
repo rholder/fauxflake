@@ -164,6 +164,7 @@ public class IdGeneratorTest {
             Assert.fail("Expected Exception for backwards time");
         } catch (BackwardsTimeException e) {
             Assert.assertTrue("Exception did not relate to backwards time", e.getMessage().contains("Backwards"));
+            Assert.assertEquals("Unexpected offset from present", 50, e.getOffset());
         }
     }
 
