@@ -66,7 +66,8 @@ public class DefaultIdGenerator implements IdGenerator {
 
             // backwards time, likely due to NTP updates for clock drift
             if(currentTime < lastTime) {
-                throw new InterruptedException("Backwards time detected, try again in " + (lastTime - currentTime) + " ms");
+                long diff = lastTime - currentTime;
+                throw new BackwardsTimeException("Backwards time detected, try again in " + diff + " ms", diff);
             }
 
             if(sequence == encodingProvider.maxSequenceNumbers()) {
@@ -74,7 +75,7 @@ public class DefaultIdGenerator implements IdGenerator {
                 int currentWait = 0;
                 while(currentTime <= lastTime) {
                     if(currentWait > maxWait) {
-                        throw new InterruptedException("The maximum time to wait to generate an id has been exceeded");
+                        throw new WaitTimeExceededException("The maximum time to wait to generate an id has been exceeded") ;
                     }
                     Thread.sleep(1);
                     currentTime = timeProvider.getCurrentTime();

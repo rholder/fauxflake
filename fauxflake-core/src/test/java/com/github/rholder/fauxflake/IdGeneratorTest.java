@@ -162,7 +162,7 @@ public class IdGeneratorTest {
         try {
             idGenerator.generateId(10);
             Assert.fail("Expected Exception for backwards time");
-        } catch (InterruptedException e) {
+        } catch (BackwardsTimeException e) {
             Assert.assertTrue("Exception did not relate to backwards time", e.getMessage().contains("Backwards"));
         }
     }
@@ -203,7 +203,7 @@ public class IdGeneratorTest {
         try {
             idGenerator.generateId(0);
             Assert.fail("Expected Exception for waiting too long");
-        } catch (InterruptedException e) {
+        } catch (WaitTimeExceededException e) {
             Assert.assertTrue("Exception did not relate to maximum time to wait", e.getMessage().contains("maximum time to wait "));
         }
     }
