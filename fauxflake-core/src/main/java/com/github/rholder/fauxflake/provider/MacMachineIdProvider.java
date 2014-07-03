@@ -19,8 +19,10 @@ package com.github.rholder.fauxflake.provider;
 import com.github.rholder.fauxflake.api.MachineIdProvider;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 import static com.github.rholder.fauxflake.util.MacUtils.macAddress;
 
@@ -39,9 +41,10 @@ public class MacMachineIdProvider implements MachineIdProvider {
 
     static {
         long value = 0L;
+        byte[] raw = Arrays.copyOf(macAddress(), 8);
         try {
-            // 6 bytes of MAC
-            value = new DataInputStream(new ByteArrayInputStream(macAddress())).readLong();
+            // first 6 bytes are MAC
+            value = new DataInputStream(new ByteArrayInputStream(raw)).readLong();
         } catch (IOException e) {
             e.printStackTrace();
         }
