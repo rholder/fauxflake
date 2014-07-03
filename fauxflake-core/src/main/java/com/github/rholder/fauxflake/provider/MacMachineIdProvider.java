@@ -19,7 +19,6 @@ package com.github.rholder.fauxflake.provider;
 import com.github.rholder.fauxflake.api.MachineIdProvider;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.util.Arrays;
