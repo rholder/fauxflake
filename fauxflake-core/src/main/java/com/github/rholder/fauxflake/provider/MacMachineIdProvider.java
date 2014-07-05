@@ -20,7 +20,6 @@ import com.github.rholder.fauxflake.api.MachineIdProvider;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.IOException;
 import java.util.Arrays;
 
 import static com.github.rholder.fauxflake.util.MacUtils.macAddress;
@@ -44,12 +43,8 @@ public class MacMachineIdProvider implements MachineIdProvider {
             // first 6 bytes are MAC
             byte[] raw = Arrays.copyOf(macAddress(), 8);
             value = new DataInputStream(new ByteArrayInputStream(raw)).readLong();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnsupportedOperationException e) {
-            e.printStackTrace();
-        } catch (NoClassDefFoundError e) {
-            e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
         MACHINE_ID = value;
     }
