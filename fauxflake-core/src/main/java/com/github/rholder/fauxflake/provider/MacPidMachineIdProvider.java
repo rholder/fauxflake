@@ -43,9 +43,9 @@ public class MacPidMachineIdProvider implements MachineIdProvider {
 
     static {
         long value = 0L;
-        byte[] raw = Arrays.copyOf(macAddress(), 8);
         try {
             // first 6 bytes are MAC
+            byte[] raw = Arrays.copyOf(macAddress(), 8);
             value = new DataInputStream(new ByteArrayInputStream(raw)).readLong();
 
             // next 2 bytes are pid % 2^16
