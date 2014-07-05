@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/rholder/fauxflake.png)](https://travis-ci.org/rholder/fauxflake)
+[![Build Status](http://img.shields.io/travis/rholder/fauxflake.svg)](https://travis-ci.org/rholder/fauxflake) [![Coverage Status](http://img.shields.io/coveralls/rholder/fauxflake.svg)](https://coveralls.io/r/rholder/fauxflake?branch=master) [![Latest Version](http://img.shields.io/badge/latest-1.0.1-brightgreen.svg)](https://github.com/rholder/fauxflake/releases/tag/v1.0.1) [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/esthree/blob/master/LICENSE)
 
 ##What is this?
 Fauxflake is an easily embeddable, decentralized, k-ordered unique ID generator.
