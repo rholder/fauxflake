@@ -29,7 +29,7 @@ import com.github.rholder.fauxflake.provider.twitter.SnowflakeEncodingProvider;
  * This class provides a collection of convenience methods for constructing
  * common {@link IdGenerator} implementations.
  */
-public class IdGenerators {
+public abstract class IdGenerators {
 
     /**
      * Create a Snowflake-based {@link IdGenerator} using the MAC address and

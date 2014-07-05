@@ -21,7 +21,7 @@ import java.lang.management.ManagementFactory;
 /**
  * This class adds functionality for working with Unix process id's (PID).
  */
-public class PidUtils {
+public abstract class PidUtils {
 
     /**
      * Return the PID from the currently running JVM or 0 if it could not be

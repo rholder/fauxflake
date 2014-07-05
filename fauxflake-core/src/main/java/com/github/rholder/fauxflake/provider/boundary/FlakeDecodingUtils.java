@@ -23,7 +23,7 @@ import java.util.Date;
  * This class adds a collection of functionality for working with and
  * manipulating 128-bit Flake id's.
  */
-public class FlakeDecodingUtils {
+public abstract class FlakeDecodingUtils {
 
     /**
      * Return the Date from the given encoded Flake id.

@@ -22,7 +22,7 @@ import java.util.Date;
  * This class adds a collection of functionality for working with and
  * manipulating 64-bit Snowflake id's.
  */
-public class SnowflakeDecodingUtils {
+public abstract class SnowflakeDecodingUtils {
 
     /**
      * Return the Date from the given encoded Snowflake id.

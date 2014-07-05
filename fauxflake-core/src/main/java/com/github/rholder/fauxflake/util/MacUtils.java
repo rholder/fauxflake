@@ -26,7 +26,7 @@ import static java.net.NetworkInterface.getNetworkInterfaces;
 /**
  * This class adds functionality for working with MAC hardware addresses.
  */
-public class MacUtils {
+public abstract class MacUtils {
 
     /**
      * System property used to override the MAC returned by getOverride().
