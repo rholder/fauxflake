@@ -12,6 +12,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collections;
+import java.util.Enumeration;
 
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 import static org.powermock.api.mockito.PowerMockito.when;
@@ -54,7 +55,8 @@ public class MacUtilsMockTest {
     @Test
     public void emptyNetworkInterfaces() throws SocketException, IllegalAccessException, InstantiationException {
         mockStatic(NetworkInterface.class);
-        when(NetworkInterface.getNetworkInterfaces()).thenReturn(Collections.<NetworkInterface>emptyEnumeration());
+        Enumeration<NetworkInterface> empty = Collections.emptyEnumeration();
+        when(NetworkInterface.getNetworkInterfaces()).thenReturn(empty);
 
         try {
             MacUtils.realMacAddress();
