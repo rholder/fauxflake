@@ -6,6 +6,8 @@ sourceCompatibility = JavaVersion.VERSION_1_6
 targetCompatibility = JavaVersion.VERSION_1_6
 
 dependencies {
-    testCompile 'junit:junit:4.10'
-    testCompile 'org.mockito:mockito-core:1.8.5'
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'org.powermock:powermock-api-mockito:1.5.4'
+    testCompile 'org.powermock:powermock-module-junit4:1.5.4'
 }

@@ -77,10 +77,10 @@ public abstract class MacUtils {
                 }
             }
             if (mac == null) {
-                throw new UnsupportedOperationException("Could not retrieve hardware MAC address");
+                throw new UnsupportedOperationException("Could not retrieve hardware MAC address, no MAC addresses detected");
             }
         } catch (SocketException e) {
-            throw new UnsupportedOperationException("Could not retrieve hardware MAC address", e);
+            throw new UnsupportedOperationException("Could not retrieve hardware MAC address, SocketException occurred", e);
         }
         return mac;
     }

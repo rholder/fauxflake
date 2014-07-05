@@ -35,9 +35,9 @@ import static com.github.rholder.fauxflake.util.MacUtils.macAddress;
  */
 public class MacMachineIdProvider implements MachineIdProvider {
 
-    public static final long MACHINE_ID;
+    private final long machineId;
 
-    static {
+    public MacMachineIdProvider() {
         long value = 0L;
         try {
             // first 6 bytes are MAC
@@ -46,7 +46,7 @@ public class MacMachineIdProvider implements MachineIdProvider {
         } catch (Throwable t) {
             t.printStackTrace();
         }
-        MACHINE_ID = value;
+        machineId = value;
     }
 
     /**
@@ -55,6 +55,6 @@ public class MacMachineIdProvider implements MachineIdProvider {
      */
     @Override
     public long getMachineId() {
-        return MACHINE_ID;
+        return machineId;
     }
 }
