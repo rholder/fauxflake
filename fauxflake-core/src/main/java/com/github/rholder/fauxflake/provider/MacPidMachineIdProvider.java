@@ -53,6 +53,8 @@ public class MacPidMachineIdProvider implements MachineIdProvider {
             value |= pid() % 65536;
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (UnsupportedOperationException e) {
+            e.printStackTrace();
         }
         MACHINE_ID = value;
     }
