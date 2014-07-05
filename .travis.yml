@@ -8,5 +8,8 @@ jdk:
 env:
   - TERM=dumb
 
+script:
+  - ./gradlew check --stacktrace
+
 after_success:
   - gradle cobertura coveralls

@@ -1,12 +1,10 @@
 package com.github.rholder.fauxflake.provider;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class MacMachineIdProviderTest {
 
-    @Ignore("skip for Travis CI")
     @Test
     public void validateProvider() {
         Assert.assertEquals("Machine id's are not deterministic",
