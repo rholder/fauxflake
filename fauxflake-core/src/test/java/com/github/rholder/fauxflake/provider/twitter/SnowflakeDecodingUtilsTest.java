@@ -26,11 +26,7 @@ import org.junit.Test;
 
 import java.util.Date;
 
-import static com.github.rholder.fauxflake.provider.twitter.SnowflakeDecodingUtils.decodeDate;
-import static com.github.rholder.fauxflake.provider.twitter.SnowflakeDecodingUtils.decodeMachineId;
-import static com.github.rholder.fauxflake.provider.twitter.SnowflakeDecodingUtils.decodeSequence;
-
-public class SnowflakeDecodingUtilsTest {
+public class SnowflakeDecodingUtilsTest extends SnowflakeDecodingUtils {
 
     private static final int TEST_MACHINE_ID = 53;
     private IdGenerator idGenerator;

@@ -21,7 +21,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class MacUtilsTest {
+public class MacUtilsTest extends MacUtils {
     /**
      * Make sure we can actually fetch a MAC address.
      */
@@ -56,6 +56,16 @@ public class MacUtilsTest {
     @Test
     public void bogusOverride() {
         System.setProperty(MacUtils.OVERRIDE_MAC_PROP, "totally not a MAC");
+
+        byte[] mac = MacUtils.getOverride();
+
+        Assert.assertNull("Retrieved a bogus MAC", mac);
+        System.clearProperty(MacUtils.OVERRIDE_MAC_PROP);
+    }
+
+    @Test
+    public void slightlyBogusOverride() {
+        System.setProperty(MacUtils.OVERRIDE_MAC_PROP, "00:DE:AD:BE:EF:QQ");
 
         byte[] mac = MacUtils.getOverride();
 

@@ -3,7 +3,7 @@ package com.github.rholder.fauxflake.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class StringUtilsTest {
+public class StringUtilsTest extends StringUtils {
 
     @Test
     public void isEmpty() {

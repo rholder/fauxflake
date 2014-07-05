@@ -28,11 +28,7 @@ import org.junit.Test;
 import java.nio.ByteBuffer;
 import java.util.Date;
 
-import static com.github.rholder.fauxflake.provider.boundary.FlakeDecodingUtils.decodeDate;
-import static com.github.rholder.fauxflake.provider.boundary.FlakeDecodingUtils.decodeMachineId;
-import static com.github.rholder.fauxflake.provider.boundary.FlakeDecodingUtils.decodeSequence;
-
-public class FlakeDecodingUtilsTest {
+public class FlakeDecodingUtilsTest extends FlakeDecodingUtils {
 
     private static final int TEST_MACHINE_ID = 53;
     private IdGenerator idGenerator;

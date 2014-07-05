@@ -19,7 +19,7 @@ package com.github.rholder.fauxflake.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class PidUtilsTest {
+public class PidUtilsTest extends PidUtils {
     /**
      * Make sure we can actually fetch a PID.
      */
