@@ -48,6 +48,8 @@ public class MacMachineIdProvider implements MachineIdProvider {
             e.printStackTrace();
         } catch (UnsupportedOperationException e) {
             e.printStackTrace();
+        } catch (NoClassDefFoundError e) {
+            e.printStackTrace();
         }
         MACHINE_ID = value;
     }
