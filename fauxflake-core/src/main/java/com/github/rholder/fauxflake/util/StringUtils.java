@@ -184,7 +184,7 @@ public class StringUtils {
      * @throws IndexOutOfBoundsException if <code>repeat &lt; 0</code>
      * @see #repeat(String, int)
      */
-    private static String padding(int repeat, char padChar) throws IndexOutOfBoundsException {
+    public static String padding(int repeat, char padChar) throws IndexOutOfBoundsException {
         if (repeat < 0) {
             throw new IndexOutOfBoundsException("Cannot pad a negative amount: " + repeat);
         }

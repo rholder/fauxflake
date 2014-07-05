@@ -36,4 +36,17 @@ public class StringUtilsTest extends StringUtils {
         Assert.assertEquals("  bat", StringUtils.leftPad("bat", 5, null));
         Assert.assertEquals("  bat", StringUtils.leftPad("bat", 5, ""));
     }
+
+    @Test
+    public void padding() {
+        Assert.assertEquals("", padding(0, 'e'));
+        Assert.assertEquals("eee", padding(3, 'e'));
+
+        try {
+            padding(-2, 'e');
+            Assert.fail("Expected IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException e) {
+            Assert.assertTrue(e.getMessage().contains("Cannot pad a negative amount:"));
+        }
+    }
 }
