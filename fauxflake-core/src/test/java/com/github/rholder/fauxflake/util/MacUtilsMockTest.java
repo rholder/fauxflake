@@ -55,7 +55,7 @@ public class MacUtilsMockTest {
     @Test
     public void emptyNetworkInterfaces() throws SocketException, IllegalAccessException, InstantiationException {
         mockStatic(NetworkInterface.class);
-        Enumeration<NetworkInterface> empty = Collections.emptyEnumeration();
+        Enumeration<NetworkInterface> empty = Collections.enumeration(Collections.<NetworkInterface>emptyList());
         when(NetworkInterface.getNetworkInterfaces()).thenReturn(empty);
 
         try {
