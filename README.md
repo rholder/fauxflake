@@ -1,4 +1,4 @@
-[![Build Status](http://img.shields.io/travis/rholder/fauxflake.svg)](https://travis-ci.org/rholder/fauxflake) [![Coverage Status](http://img.shields.io/coveralls/rholder/fauxflake.svg)](https://coveralls.io/r/rholder/fauxflake?branch=master) [![Latest Version](http://img.shields.io/badge/latest-1.0.1-brightgreen.svg)](https://github.com/rholder/fauxflake/releases/tag/v1.0.1) [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/esthree/blob/master/LICENSE)
+[![Build Status](http://img.shields.io/travis/rholder/fauxflake.svg)](https://travis-ci.org/rholder/fauxflake) [![Coverage Status](http://img.shields.io/coveralls/rholder/fauxflake.svg)](https://coveralls.io/r/rholder/fauxflake?branch=master) [![Latest Version](http://img.shields.io/badge/latest-1.1.0-brightgreen.svg)](https://github.com/rholder/fauxflake/releases/tag/v1.1.0) [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/rholder/fauxflake/blob/master/LICENSE)
 
 ##What is this?
 Fauxflake is an easily embeddable, decentralized, k-ordered unique ID generator.
@@ -30,12 +30,12 @@ build tool:
     <dependency>
       <groupId>com.github.rholder.fauxflake</groupId>
       <artifactId>fauxflake-core</artifactId>
-      <version>1.0.1</version>
+      <version>1.1.0</version>
     </dependency>
 
 ###Gradle
 
-    compile "com.github.rholder.fauxflake:fauxflake-core:1.0.1"
+    compile "com.github.rholder.fauxflake:fauxflake-core:1.1.0"
 
 ##Quickstart
 Let's say you want to generate a lexicographically sortable, Twitter compatible
@@ -71,7 +71,7 @@ identifiers since the specification calls for reserving 10 bits for this
 information.
 
 ##Additional Documentation
-Javadoc can be found [here](http://rholder.github.io/fauxflake/javadoc/1.0.1/fauxflake-core/index.html).
+Javadoc can be found [here](http://rholder.github.io/fauxflake/javadoc/1.1.0/fauxflake-core/index.html).
 
 ##Building from source
 The Fauxflake project uses a [Gradle](http://gradle.org)-based build system. In the instructions
