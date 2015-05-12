@@ -65,7 +65,7 @@ public class SnowflakeEncodingProvider implements EncodingProvider {
     private long shiftedMachineId;
 
     public SnowflakeEncodingProvider(long machineId) {
-        this.shiftedMachineId = ((machineId % MACHINE_CODES) << SHIFT_MACHINE_CODE_BITS);
+        this.shiftedMachineId = ((Math.abs(machineId) % MACHINE_CODES) << SHIFT_MACHINE_CODE_BITS);
     }
 
     @Override

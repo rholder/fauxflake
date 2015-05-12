@@ -20,20 +20,37 @@ import com.github.rholder.fauxflake.DefaultIdGenerator;
 import com.github.rholder.fauxflake.api.Id;
 import com.github.rholder.fauxflake.api.IdGenerator;
 import com.github.rholder.fauxflake.provider.SystemTimeProvider;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 
+@RunWith(Parameterized.class)
 public class SnowflakeDecodingUtilsTest extends SnowflakeDecodingUtils {
 
-    private static final int TEST_MACHINE_ID = 53;
+    private final int machineId;
     private IdGenerator idGenerator;
+    
+    @Parameters
+    public static Collection<?> data() {
+      Object[][] data = new Object[][] { {53}, {-53} };
+      return Arrays.asList(data);
+    }
+    
+    public SnowflakeDecodingUtilsTest(int machineId) {
+        this.machineId = machineId;
+    }
 
     @Before
     public void before() {
-        idGenerator = new DefaultIdGenerator(new SystemTimeProvider(), new SnowflakeEncodingProvider(TEST_MACHINE_ID));
+        idGenerator = new DefaultIdGenerator(new SystemTimeProvider(), new SnowflakeEncodingProvider(machineId));
     }
 
     @Test
@@ -55,7 +72,7 @@ public class SnowflakeDecodingUtilsTest extends SnowflakeDecodingUtils {
         Date idDate = decodeDate(longId);
 
         Assert.assertTrue("Now is greater than generated id", now.getTime() <= idDate.getTime());
-        Assert.assertEquals("Unexpected machine id", TEST_MACHINE_ID, decodeMachineId(longId));
+        Assert.assertEquals("Unexpected machine id", Math.abs(machineId), decodeMachineId(longId));
         Assert.assertEquals("Unexpected number of bytes in id", 8, byteId.length);
     }
 
