@@ -92,8 +92,15 @@ public abstract class MacUtils {
      * Optionally setting the system property OVERRIDE_MAC_PROP to a valid MAC
      * address will result in it being returned instead.
      */
-    public static byte[] macAddress() {
+public static byte[] macAddress() {
         byte[] override = getOverride();
-        return  override != null ? override : realMacAddress();
+
+        if (override == null)
+            override = realMacAddress();
+
+        // lop off unicast/multicast lower bit to preserve top vendor bit & resolution. This
+        override[0] = (byte)((short)(override[0] & 0xff) >> 1);
+
+        return override;
     }
 }
