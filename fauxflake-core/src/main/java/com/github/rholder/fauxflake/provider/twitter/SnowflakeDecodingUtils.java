@@ -48,6 +48,6 @@ public abstract class SnowflakeDecodingUtils {
      * @param id the id to decode from
      */
     public static int decodeSequence(long id) {
-        return (int)(id & 0x0000000000000FFF);
+        return (int)(id & SnowflakeEncodingProvider.SEQUENCE_MASK);
     }
 }

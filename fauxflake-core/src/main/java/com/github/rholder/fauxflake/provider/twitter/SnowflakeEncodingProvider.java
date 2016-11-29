@@ -48,6 +48,12 @@ public class SnowflakeEncodingProvider implements EncodingProvider {
     public static final int MAX_SEQUENCE_NUMBERS = 4096;
 
     /**
+     * Number of bits needed to represent all sequence numbers
+     */
+    public static final int SEQUENCE_BITS = 12;
+    public static final int SEQUENCE_MASK = ~(-1 << SEQUENCE_BITS);
+
+    /**
      * Number of bits to shift the time over
      */
     public static final int SHIFT_TIME_BITS = 22;
@@ -68,9 +74,13 @@ public class SnowflakeEncodingProvider implements EncodingProvider {
         this.shiftedMachineId = ((machineId % MACHINE_CODES) << SHIFT_MACHINE_CODE_BITS);
     }
 
+    /**
+     * Returns a Snowflake ID. Note that only the lower order 12 bits of the sequence number are
+     * used
+     */
     @Override
     public byte[] encodeAsBytes(long time, int sequence) {
-        long v =  ((time - EPOCH) << SHIFT_TIME_BITS) | shiftedMachineId | sequence;
+        long v =  ((time - EPOCH) << SHIFT_TIME_BITS) | shiftedMachineId | (sequence & SEQUENCE_MASK);
 
         byte[] buffer = new byte[8];
         buffer[0] = (byte)(v >>> 56);
